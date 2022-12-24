@@ -3,10 +3,15 @@ function App() {
     <div className="App">
       {" "}
       Weather App
-      <a
-        href="https://github.com/SvitlanaTymchii/react-weather-app"
-        target="_blank"
-      ></a>
+      <footer>
+        This project is created by Svitlana Tymchii and is{" "}
+        <a
+          href="https://github.com/SvitlanaTymchii/react-weather-app"
+          target="_blank"
+        >
+          open sourced
+        </a>
+      </footer>
     </div>
   );
 }
