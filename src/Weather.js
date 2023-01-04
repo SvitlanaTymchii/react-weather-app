@@ -2,72 +2,111 @@ import React, { useState } from "react";
 import "./Weather.css";
 import axios from "axios";
 
-export default function Weather() {
-  let [temperature, setTemperature] = useState(null);
-  function handleResponse(response) {
-    console.log("---------------");
-    setTemperature(Math.round(response.data.temperature.current));
-    console.log(temperature);
-  }
-  const apiKey = "4a9562b441206e7789dda73f03odae5t";
-  let city = "Lisbon";
-  let units = "metric";
-  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=${units}`;
-  axios.get(apiUrl).then(handleResponse);
-  return (
-    <div className="Weather">
-      <form>
-        <div className="row">
-          <div className="col-9">
-            <input
-              type="search"
-              placeholder="Enter a city..."
-              className="form-control"
-              autoFocus="on"
-            />
-          </div>
-          <div className="col-3">
-            <input
-              type="submit"
-              value="Search"
-              className="btn btn-primary
-            w-100"
-            />
-          </div>
-        </div>
-      </form>
-      <h1>{city}</h1>
-      <ul>
-        <li>Wednesday 07:00</li>
-        <li>Mostly cloudy </li>
-      </ul>
+export default function Weather(props) {
+  const [ready, setReady] = useState(false);
+  const [weatherData, setWeatherData] = useState({});
 
-      <div className="row">
-        <div className="col-6 ">
+  const [day, setDay] = useState(null);
+  const [time, setTime] = useState(null);
+
+  function handleResponse(response) {
+    setReady(true);
+    setWeatherData({
+      temperature: Math.round(response.data.temperature.current),
+      humidity: Math.round(response.data.temperature.humidity),
+      wind: Math.round(response.data.wind.speed),
+      IconUrl: response.data.condition.icon_url,
+      description: response.data.condition.description,
+      city: response.data.city,
+    });
+    setDay(response.data.time);
+    setTime(response.data.time);
+  }
+
+  if (ready) {
+    console.log(weatherData.iconUrl);
+
+    return (
+      <div className="Weather">
+        <form>
           <div className="row">
-            <div className="col-6 ">
-              <img
-                src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
-                alt="Weather"
+            <div className="col-9">
+              <input
+                type="search"
+                placeholder="Enter a city..."
+                className="form-control"
+                autoFocus="on"
               />
             </div>
-            <div className="col-4 ">
-              <span className="temperature ">{temperature}</span>
-            </div>
-            <div className="col-2 ">
-              <span className="units ">ºC</span>
+            <div className="col-3">
+              <input
+                type="submit"
+                value="Search"
+                className="btn btn-primary
+            w-100"
+              />
             </div>
           </div>
-        </div>
+        </form>
+        <h1>{weatherData.city}</h1>
+        <ul>
+          <li>
+            {day} {time}
+          </li>
+          <li className="text-capitalize">{weatherData.description} </li>
+        </ul>
+        <div className="row">
+          <div className="col-6 ">
+            <div className="row ">
+              <div className="col-6 ">
+                <img
+                  //src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
+                  src={weatherData.iconUrl}
+                  alt={weatherData.description}
+                />
+              </div>
+              <div className="col-4 ">
+                <span className="temperature ">{weatherData.temperature}</span>
+              </div>
+              <div className="col-2 ">
+                <span className="units ">ºC</span>
+              </div>
+            </div>
+          </div>
 
-        <div className="col-6 ">
-          <ul className="description">
-            <li>Опади: 3%</li>
-            <li>Вологість: 93% </li>
-            <li>Вітер: 6 км/год</li>
-          </ul>
+          <div className="col-6 ">
+            <ul className=" description ">
+              <li>Humidity: {weatherData.humidity}% </li>
+              <li>Wind: {weatherData.wind} km/h</li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    const apiKey = "4a9562b441206e7789dda73f03odae5t";
+    let units = "metric";
+    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${props.defaultCity}&key=${apiKey}&units=${units}`;
+
+    axios.get(apiUrl).then(handleResponse);
+    let now = new Date(); // нова змінна формату дати
+    let currentDay = now.getDay();
+    let currentMonth = now.getMonth();
+    let currentHours = now.getHours();
+    let currentMin = now.getMinutes();
+    if (currentMin < 10) {
+      currentMin = "0" + currentMin;
+    }
+    console
+      .log
+      //currentDay," ",
+      // currentMonth,
+      // "  ",
+      //currentHours,
+      //"     ",
+      //currentMin
+      ();
+
+    return "Loading...";
+  }
 }
