@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import "./Weather.css";
+import FormattedDate from "./FormattedDate.js";
+
 import axios from "axios";
 
 export default function Weather(props) {
   const [ready, setReady] = useState(false);
   const [weatherData, setWeatherData] = useState({});
-
-  const [day, setDay] = useState(null);
-  const [time, setTime] = useState(null);
 
   function handleResponse(response) {
     console.log(response.data);
@@ -19,23 +18,39 @@ export default function Weather(props) {
       description: response.data.condition.description,
       city: response.data.city,
       iconUrl: response.data.condition.icon_url,
-      date: new Date(response.data.dt * 1000),
+      date: new Date(response.data.time * 1000),
     });
-    setTime(response.data.time);
-    setDay(response.data.time);
+  }
+
+  let [city, setCity] = useState("");
+
+  function updateCity(event) {
+    event.preventDefault();
+    setCity(event.target.value);
+  }
+
+  function Searching(event) {
+    event.preventDefault();
+    if (city !== "") {
+      weatherData.city = city;
+      console.log(city);
+      console.log(weatherData.city);
+      console.log(ready);
+    }
   }
 
   if (ready) {
     return (
       <div className="Weather">
-        <form>
+        <form onSubmit={Searching}>
           <div className="row">
-            <div className="col-9">
+            <div className="col-8">
               <input
                 type="search"
                 placeholder="Enter a city..."
                 className="form-control"
                 autoFocus="on"
+                onChange={updateCity}
               />
             </div>
             <div className="col-3">
@@ -51,7 +66,7 @@ export default function Weather(props) {
         <h1>{weatherData.city}</h1>
         <ul>
           <li>
-            {day} {time}
+            <FormattedDate date={weatherData.date} />
           </li>
           <li className="text-capitalize">{weatherData.description} </li>
         </ul>
@@ -83,23 +98,6 @@ export default function Weather(props) {
     let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${props.defaultCity}&key=${apiKey}&units=${units}`;
 
     axios.get(apiUrl).then(handleResponse);
-    let now = new Date(); // нова змінна формату дати
-    let currentDay = now.getDay();
-    let currentMonth = now.getMonth();
-    let currentHours = now.getHours();
-    let currentMin = now.getMinutes();
-    if (currentMin < 10) {
-      currentMin = "0" + currentMin;
-    }
-    console
-      .log
-      //currentDay," ",
-      // currentMonth,
-      // "  ",
-      //currentHours,
-      //"     ",
-      //currentMin
-      ();
 
     return "Loading...";
   }

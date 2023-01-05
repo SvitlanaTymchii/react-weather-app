@@ -43,3 +43,8 @@
 .Weather .units {
   color: rgb(129, 127, 127);
 }
+
+.btn-primary {
+  background-color: #7ec6f0 !important;
+  border-color: white !important;
+}
