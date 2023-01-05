@@ -10,22 +10,22 @@ export default function Weather(props) {
   const [time, setTime] = useState(null);
 
   function handleResponse(response) {
+    console.log(response.data);
     setReady(true);
     setWeatherData({
       temperature: Math.round(response.data.temperature.current),
       humidity: Math.round(response.data.temperature.humidity),
       wind: Math.round(response.data.wind.speed),
-      IconUrl: response.data.condition.icon_url,
       description: response.data.condition.description,
       city: response.data.city,
+      iconUrl: response.data.condition.icon_url,
+      date: new Date(response.data.dt * 1000),
     });
-    setDay(response.data.time);
     setTime(response.data.time);
+    setDay(response.data.time);
   }
 
   if (ready) {
-    console.log(weatherData.iconUrl);
-
     return (
       <div className="Weather">
         <form>
@@ -56,20 +56,14 @@ export default function Weather(props) {
           <li className="text-capitalize">{weatherData.description} </li>
         </ul>
         <div className="row">
-          <div className="col-6 ">
+          <div className="col-5 ">
             <div className="row ">
-              <div className="col-6 ">
-                <img
-                  //src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
-                  src={weatherData.iconUrl}
-                  alt={weatherData.description}
-                />
+              <div className="col-5 ">
+                <img src={weatherData.iconUrl} alt={weatherData.description} />
               </div>
               <div className="col-4 ">
                 <span className="temperature ">{weatherData.temperature}</span>
-              </div>
-              <div className="col-2 ">
-                <span className="units ">ºC</span>
+                <span className="units align-top ">ºC</span>
               </div>
             </div>
           </div>

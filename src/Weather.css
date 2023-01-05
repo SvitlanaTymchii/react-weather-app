@@ -31,10 +31,15 @@
 }
 .Weather img {
   padding-left: 16px;
-  height: 64px;
+  height: 74px;
 }
 
 .Weather .temperature {
   font-size: 64px;
   line-height: 64px;
+  color: rgb(129, 127, 127);
+}
+
+.Weather .units {
+  color: rgb(129, 127, 127);
 }
