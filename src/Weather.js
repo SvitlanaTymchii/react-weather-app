@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./Weather.css";
-import FormattedDate from "./FormattedDate.js";
 
 import axios from "axios";
 import WeatherInfo from "./WeatherInfo";
@@ -23,27 +22,28 @@ export default function Weather(props) {
     });
   }
 
-  let [city, setCity] = useState("");
+  let [city, setCity] = useState(props.defaultCity);
 
-  function updateCity(event) {
-    event.preventDefault();
+  function search() {
+    const apiKey = "4a9562b441206e7789dda73f03odae5t";
+    let units = "metric";
+    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=${units}`;
+    axios.get(apiUrl).then(handleResponse);
+  }
+
+  function handleCityChange(event) {
     setCity(event.target.value);
   }
 
-  function Searching(event) {
+  function handleSubmit(event) {
     event.preventDefault();
-    if (city !== "") {
-      weatherData.city = city;
-      console.log(city);
-      console.log(weatherData.city);
-      console.log(ready);
-    }
+    search();
   }
 
   if (ready) {
     return (
       <div className="Weather">
-        <form onSubmit={Searching}>
+        <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-8">
               <input
@@ -51,7 +51,7 @@ export default function Weather(props) {
                 placeholder="Enter a city..."
                 className="form-control"
                 autoFocus="on"
-                onChange={updateCity}
+                onChange={handleCityChange}
               />
             </div>
             <div className="col-3">
@@ -68,12 +68,7 @@ export default function Weather(props) {
       </div>
     );
   } else {
-    const apiKey = "4a9562b441206e7789dda73f03odae5t";
-    let units = "metric";
-    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${props.defaultCity}&key=${apiKey}&units=${units}`;
-
-    axios.get(apiUrl).then(handleResponse);
-
+    search();
     return "Loading...";
   }
 }
