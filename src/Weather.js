@@ -10,7 +10,7 @@ export default function Weather(props) {
   const [weatherData, setWeatherData] = useState({});
 
   function handleResponse(response) {
-    console.log(response.data);
+    //console.log("Hello, current data", response.data);
     setReady(true);
     setWeatherData({
       temperature: Math.round(response.data.temperature.current),
@@ -25,11 +25,28 @@ export default function Weather(props) {
 
   let [city, setCity] = useState(props.defaultCity);
 
+  const [forecastData, setForecastData] = useState({});
+
+  function handleResponseForecast(response) {
+    //console.log("Hello, forecast data", response.data);
+    //console.log("Hello, forecast time", response.data.daily[0].time);
+
+    setForecastData({
+      iconUrl: response.data.daily[0].condition.icon_url,
+      alt: response.data.daily[0].condition.icon,
+      temperatureMax: Math.round(response.data.daily[0].temperature.maximum),
+      temperatureMin: Math.round(response.data.daily[0].temperature.minimum),
+      date: new Date(response.data.daily[0].time * 1000),
+    });
+  }
+
   function search() {
     const apiKey = "4a9562b441206e7789dda73f03odae5t";
     let units = "metric";
     let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=${units}`;
     axios.get(apiUrl).then(handleResponse);
+    let apiUrlForForecast = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=${units}`;
+    axios.get(apiUrlForForecast).then(handleResponseForecast);
   }
 
   function handleCityChange(event) {
@@ -66,7 +83,7 @@ export default function Weather(props) {
           </div>
         </form>
         <WeatherInfo data={weatherData} />
-        <WeatherForecast />
+        <WeatherForecast data={forecastData} />
       </div>
     );
   } else {
