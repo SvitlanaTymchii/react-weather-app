@@ -9,7 +9,7 @@ export default function WeatherForecast(props) {
         <div className="col">
           <div className="WeatherForecast-day">
             <div className="WeatherForecast-day-name"> </div>
-            <FormattedDayForecast date={props.data.date} />{" "}
+            <FormattedDayForecast date={props.data.date} />
             <img src={props.data.iconUrl} alt={props.data.icon} />
             <div className="WeatherForecast-temperatures">
               <span className="WeatherForecast-temperature-max">
@@ -25,3 +25,4 @@ export default function WeatherForecast(props) {
     </div>
   );
 }
+//

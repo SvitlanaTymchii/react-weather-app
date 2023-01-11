@@ -29,7 +29,8 @@ export default function Weather(props) {
 
   function handleResponseForecast(response) {
     //console.log("Hello, forecast data", response.data);
-    //console.log("Hello, forecast time", response.data.daily[0].time);
+    // console.log("Hello, forecast time", new Date(response.data.daily[0].time * 1000);
+    console.log(new Date(response.data.daily[0].time * 1000));
 
     setForecastData({
       iconUrl: response.data.daily[0].condition.icon_url,
@@ -91,3 +92,5 @@ export default function Weather(props) {
     return "Loading...";
   }
 }
+
+//<WeatherForecast data={forecastData} />
