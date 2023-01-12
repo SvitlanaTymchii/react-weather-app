@@ -115,8 +115,19 @@ export default function Weather(props) {
           </div>
         </form>
         <WeatherInfo data={weatherData} />
+        <WeatherForecast data={forecastData} />
+      </div>
+    );
+  } else {
+    search();
+    return "Loading...";
+  }
+}
+//<WeatherForecast data={forecastData} />
 
-        <div className="row">
+/*
+
+<div className="row">
           <div className="col-2">
             {forecastData.map(function (element, index) {
               return (
@@ -137,11 +148,4 @@ export default function Weather(props) {
             })}
           </div>
         </div>
-      </div>
-    );
-  } else {
-    search();
-    return "Loading...";
-  }
-}
-//<WeatherForecast data={forecastData} />
+*/
