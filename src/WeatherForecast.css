@@ -1,6 +1,3 @@
-.WeatherForecast {
-}
-
 .WeatherForecast-temperature-min {
   opacity: 0.6;
   margin-left: 5px;
@@ -23,9 +20,6 @@
 }
 
 @media only screen and (max-width: 960px) {
-  .WeatherForecast-day-name {
-  }
-
   .WeatherForecast-day-name {
     margin-left: 20px;
     text-align: center;
