@@ -21,3 +21,20 @@
 .WeatherForecast-day {
   text-align: center;
 }
+
+@media only screen and (max-width: 960px) {
+  .WeatherForecast-day-name {
+  }
+
+  .WeatherForecast-day-name {
+    margin-left: 20px;
+    text-align: center;
+    border: none;
+    font-size: 5 px;
+    border-style: none;
+    border-width: 0px;
+    border-radius: 0px;
+    border-color: rgb(255, 255, 255);
+    box-shadow: none;
+  }
+}

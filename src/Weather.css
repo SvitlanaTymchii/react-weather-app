@@ -48,3 +48,9 @@
   background-color: #7ec6f0 !important;
   border-color: white !important;
 }
+
+@media only screen and (max-width: 960px) {
+  .Weather .WeatherForecast-day img {
+    height: 40px;
+  }
+}

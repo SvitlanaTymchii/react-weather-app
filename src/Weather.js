@@ -29,8 +29,6 @@ export default function Weather(props) {
   const [forecastData, setForecastData] = useState(null);
 
   function handleResponseForecast(response) {
-    console.log(new Date(response.data.daily[0].time * 1000));
-
     setForecastData([
       {
         iconUrl: response.data.daily[1].condition.icon_url,
