@@ -4,6 +4,7 @@ import "./Weather.css";
 import axios from "axios";
 import WeatherInfo from "./WeatherInfo";
 import WeatherForecast from "./WeatherForecast";
+import FormattedDayForecast from "./FormattedDayForecast";
 
 export default function Weather(props) {
   const [ready, setReady] = useState(false);
@@ -25,20 +26,50 @@ export default function Weather(props) {
 
   let [city, setCity] = useState(props.defaultCity);
 
-  const [forecastData, setForecastData] = useState({});
+  const [forecastData, setForecastData] = useState(null);
 
   function handleResponseForecast(response) {
     //console.log("Hello, forecast data", response.data);
     // console.log("Hello, forecast time", new Date(response.data.daily[0].time * 1000);
     console.log(new Date(response.data.daily[0].time * 1000));
 
-    setForecastData({
-      iconUrl: response.data.daily[0].condition.icon_url,
-      alt: response.data.daily[0].condition.icon,
-      temperatureMax: Math.round(response.data.daily[0].temperature.maximum),
-      temperatureMin: Math.round(response.data.daily[0].temperature.minimum),
-      date: new Date(response.data.daily[0].time * 1000),
-    });
+    setForecastData([
+      {
+        iconUrl: response.data.daily[1].condition.icon_url,
+        alt: response.data.daily[1].condition.icon,
+        temperatureMax: Math.round(response.data.daily[1].temperature.maximum),
+        temperatureMin: Math.round(response.data.daily[1].temperature.minimum),
+        date: new Date(response.data.daily[1].time * 1000),
+      },
+      {
+        iconUrl: response.data.daily[2].condition.icon_url,
+        alt: response.data.daily[2].condition.icon,
+        temperatureMax: Math.round(response.data.daily[2].temperature.maximum),
+        temperatureMin: Math.round(response.data.daily[2].temperature.minimum),
+        date: new Date(response.data.daily[2].time * 1000),
+      },
+      {
+        iconUrl: response.data.daily[3].condition.icon_url,
+        alt: response.data.daily[3].condition.icon,
+        temperatureMax: Math.round(response.data.daily[3].temperature.maximum),
+        temperatureMin: Math.round(response.data.daily[3].temperature.minimum),
+        date: new Date(response.data.daily[3].time * 1000),
+      },
+      {
+        iconUrl: response.data.daily[4].condition.icon_url,
+        alt: response.data.daily[4].condition.icon,
+        temperatureMax: Math.round(response.data.daily[4].temperature.maximum),
+        temperatureMin: Math.round(response.data.daily[4].temperature.minimum),
+        date: new Date(response.data.daily[4].time * 1000),
+      },
+      {
+        iconUrl: response.data.daily[5].condition.icon_url,
+        alt: response.data.daily[5].condition.icon,
+        temperatureMax: Math.round(response.data.daily[5].temperature.maximum),
+        temperatureMin: Math.round(response.data.daily[5].temperature.minimum),
+        date: new Date(response.data.daily[5].time * 1000),
+      },
+    ]);
   }
 
   function search() {
@@ -84,7 +115,28 @@ export default function Weather(props) {
           </div>
         </form>
         <WeatherInfo data={weatherData} />
-        <WeatherForecast data={forecastData} />
+
+        <div className="row">
+          <div className="col-2">
+            {forecastData.map(function (element, index) {
+              return (
+                <div key={index}>
+                  <FormattedDayForecast date={element.date} />
+
+                  <img src={element.iconUrl} alt={element.icon} />
+                  <div className="WeatherForecast-temperatures">
+                    <span className="WeatherForecast-temperature-max">
+                      {element.temperatureMax}º
+                    </span>
+                    <span className="WeatherForecast-temperature-min">
+                      {element.temperatureMin}º
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     );
   } else {
@@ -92,5 +144,4 @@ export default function Weather(props) {
     return "Loading...";
   }
 }
-
 //<WeatherForecast data={forecastData} />
