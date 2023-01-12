@@ -29,8 +29,6 @@ export default function Weather(props) {
   const [forecastData, setForecastData] = useState(null);
 
   function handleResponseForecast(response) {
-    //console.log("Hello, forecast data", response.data);
-    // console.log("Hello, forecast time", new Date(response.data.daily[0].time * 1000);
     console.log(new Date(response.data.daily[0].time * 1000));
 
     setForecastData([
