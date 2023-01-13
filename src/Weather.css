@@ -30,7 +30,7 @@
   padding-left: 12px;
 }
 .Weather img {
-  padding-left: 16px;
+  padding-left: 20px;
   height: 78px;
 }
 
@@ -53,7 +53,8 @@
   .Weather .WeatherForecast-day img {
     height: 40px;
   }
+
   .Weather img {
-    padding-left: 0;
+    padding-left: 15px;
   }
 }
