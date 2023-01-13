@@ -53,4 +53,7 @@
   .Weather .WeatherForecast-day img {
     height: 40px;
   }
+  .Weather img {
+    padding-left: 0;
+  }
 }

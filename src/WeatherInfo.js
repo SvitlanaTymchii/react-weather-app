@@ -14,10 +14,10 @@ export default function WeatherInfo(props) {
       <div className="row">
         <div className="col-7 ">
           <div className="row ">
-            <div className="col-5 ">
+            <div className="col-4 ">
               <img src={props.data.iconUrl} alt={props.data.description} />
             </div>
-            <div className="col-7 ">
+            <div className="col-8 ">
               <WeatherTemperature celsius={props.data.temperature} />
             </div>
           </div>
